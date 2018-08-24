@@ -73,7 +73,7 @@ SNS message needs to in JSON format (not raw)
 {
   "default": "message-body",
   "email": "message-body",
-  "lambda": "{\"ses_mailer\":{\"bucket\":\"ses_notification_service\",\"mailing_list\":\"mailing_list.csv.gz\",\"html_template\":\"mail_template.html\"}}",
+  "lambda": "{\"ses_mailer\":{\"bucket\":\"ses_notification_service\",\"mailing_list\":\"mailing_list.csv.gz\",\"html_template\":\"mail_template.html\",\"plain_text_template\":\"\"}}",
   "https": "message-body"
 }
 ```
