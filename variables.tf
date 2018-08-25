@@ -23,6 +23,12 @@ variable "log_level" {
   default = "info"
 }
 
+variable "log_retention_days" {
+  type = "string"
+  description = "Number of days to hold logs for"
+  default = "180"
+}
+
 variable "max_threads" {
   type = "string"
   description = "The number of parrallel threads the Lambda can use to send messages to SES. A single thread should handle few hundred thousand."
