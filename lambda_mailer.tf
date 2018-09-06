@@ -12,6 +12,7 @@ resource "aws_lambda_function" "sns_to_ses_mailer" {
       LOG_LEVEL = "${var.log_level}"
       REGION = "${var.region}"
       MAX_THREADS  = "${var.max_threads}"
+      SENDING_DOMAIN = "${var.domain}"
     }
   }
   depends_on = ["aws_cloudwatch_log_group.sns_to_ses_mailer"]
