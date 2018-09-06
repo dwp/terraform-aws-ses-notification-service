@@ -52,7 +52,7 @@ resource "aws_sns_topic" "danz_zuper_zervice" {
   display_name = "Danz Zuper Zervice - ${terraform.workspace}"
 }
 
-resource "aws_sns_topic_subscription" "cloudwatch_alarms_lambda" {
+resource "aws_sns_topic_subscription" "sns_to_ses_mailer_lambda" {
   topic_arn = "${aws_sns_topic.danz_zuper_zervice.arn}"
   protocol  = "lambda"
   endpoint  = "${module.ses_notification_service.sns_to_ses_mailer_lambda_arn}"
@@ -73,7 +73,7 @@ SNS message needs to in JSON format (not raw)
 {
   "default": "message-body",
   "email": "message-body",
-  "lambda": "{\"ses_mailer\":{\"bucket\":\"ses_notification_service\",\"mailing_list\":\"mailing_list.csv.gz\",\"html_template\":\"mail_template.html\",\"plain_text_template\":\"\"}}",
+  "lambda": "{\"ses_mailer\":{\"bucket\":\"ses_notification_service\",\"mailing_list\":\"mailing_list.csv.gz\",\"recipients\": [{\"email_address\": \"user-name@example.com\", \"name\": \"User Name\"}],\"from_local_part\": \"no-reply\",\"html_template\":\"mail_template.html\",\"plain_text_template\": \"\",\"template_variables\": {}}}",
   "https": "message-body"
 }
 ```
