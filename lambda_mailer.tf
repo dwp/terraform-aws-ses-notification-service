@@ -3,7 +3,7 @@ resource "aws_lambda_function" "sns_to_ses_mailer" {
   function_name = "sns_to_ses_mailer"
   role = "${aws_iam_role.lambda_sns_to_ses_mailer.arn}"
   handler = "sns_to_ses_mailer.lambda_handler"
-  runtime = "python2.7"
+  runtime = "python3.6"
   source_code_hash = "${base64sha256(file(format("%s/%s",var.lambda_sns_to_ses_mailer_zip["base_path"],var.lambda_sns_to_ses_mailer_zip["file_name"])))}"
   publish = true
   timeout = 300
