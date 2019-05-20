@@ -8,15 +8,19 @@ resource "aws_kms_key" "ses_mailer_bucket_cmk" {
 resource "aws_s3_bucket" "ses_mailer_bucket" {
   bucket = "${var.bucket_name}"
   acl    = "private"
+
   versioning {
     enabled = true
   }
+
   lifecycle_rule {
     enabled = true
+
     noncurrent_version_expiration {
       days = 30
     }
   }
+
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {
@@ -29,7 +33,7 @@ resource "aws_s3_bucket" "ses_mailer_bucket" {
 
 data "aws_iam_policy_document" "ses_send_mail_read_s3" {
   statement {
-    sid = "SendMailS3BucketReadAccess"
+    sid    = "SendMailS3BucketReadAccess"
     effect = "Allow"
 
     actions = [
@@ -53,5 +57,8 @@ resource "aws_iam_policy" "ses_send_mail_read_s3" {
 }
 
 output "ses_mailer_bucket" {
-  value = "${aws_s3_bucket.ses_mailer_bucket.id}"
+  value = {
+    id  = "${aws_s3_bucket.ses_mailer_bucket.id}"
+    arn = "${aws_s3_bucket.ses_mailer_bucket.arn}"
+  }
 }
