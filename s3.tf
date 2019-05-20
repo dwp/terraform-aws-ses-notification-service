@@ -58,7 +58,7 @@ resource "aws_iam_policy" "ses_send_mail_read_s3" {
 
 output "ses_mailer_bucket" {
   value = {
-    id   = "${aws_s3_bucket.ses_mailer_bucket.id}"
+    id  = "${aws_s3_bucket.ses_mailer_bucket.id}"
     arn = "${aws_s3_bucket.ses_mailer_bucket.arn}"
   }
 }
