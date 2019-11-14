@@ -40,3 +40,9 @@ variable "bucket_name" {
   description = "Name of S3 bucket for storing mailing lists and email templates."
   default = "ses_notification_service"
 }
+
+variable "bucket_access_logging" {
+  type        = "list"
+  description = "To enable access loging on the mailing list and email templates bucket pass in a list of a map of target_bucket and target_prefix"
+  default    = []
+}

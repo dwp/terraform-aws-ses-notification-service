@@ -8,6 +8,7 @@ resource "aws_kms_key" "ses_mailer_bucket_cmk" {
 resource "aws_s3_bucket" "ses_mailer_bucket" {
   bucket = "${var.bucket_name}"
   acl    = "private"
+  logging = "${var.bucket_access_logging}"
 
   versioning {
     enabled = true

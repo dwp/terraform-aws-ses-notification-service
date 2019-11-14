@@ -20,7 +20,27 @@ module "ses_notification_service" {
 The following example creates the notification service, SNS topic, email template, and distribution list.<br/> 
 Notifications published to SNS topic will then be emailed to the distribution list.
 
-### Terraform Example
+### Enable S3 Access Logging
+```hcl
+module "ses_notification_service" {
+  source = "dwp/ses-notification-service/aws"
+  bucket_access_logging = [
+    {
+      target_bucket = "my_access_logs_bucket_id"
+      target_prefix = "s3Logs/ses_notification_service/"
+    },
+  ]
+
+  domain = "example.com"
+  region = "eu-west-2"
+  lambda_sns_to_ses_mailer_zip = {
+    base_path = ".",
+    file_name   = "aws-sns-to-ses-mailer-0.0.1.zip"
+  }
+}
+```
+
+### Complete Service Example
 ```hcl
 module "ses_notification_service" {
   source = "dwp/ses-notification-service/aws"
