@@ -19,7 +19,7 @@ data "aws_iam_policy_document" "lambda_assume_policy" {
 
 data "aws_iam_policy_document" "write_cloud_watch_logs" {
   statement {
-    sid = "WriteCloudWatchLogs"
+    sid    = "WriteCloudWatchLogs"
     effect = "Allow"
     actions = [
       "logs:CreateLogGroup",

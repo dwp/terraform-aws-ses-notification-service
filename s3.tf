@@ -13,7 +13,7 @@ resource "aws_s3_bucket" "ses_mailer_bucket" {
     for_each = var.bucket_access_logging
     content {
       target_bucket = logging.value.target_bucket
-      target_prefix   = logging.value.target_prefix
+      target_prefix = logging.value.target_prefix
     }
   }
 
