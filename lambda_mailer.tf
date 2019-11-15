@@ -15,7 +15,7 @@ resource "aws_lambda_function" "sns_to_ses_mailer" {
       SENDING_DOMAIN = var.domain
     }
   }
-  depends_on = ["aws_cloudwatch_log_group.sns_to_ses_mailer"]
+  depends_on = [aws_cloudwatch_log_group.sns_to_ses_mailer]
 }
 
 resource "aws_iam_role" "lambda_sns_to_ses_mailer" {
