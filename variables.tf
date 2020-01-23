@@ -46,3 +46,7 @@ variable "bucket_access_logging" {
   description = "To enable access loging on the mailing list and email templates bucket pass in a list of a map of target_bucket and target_prefix"
   default     = []
 }
+
+variable "common_tags" {
+  default = {}
+}
