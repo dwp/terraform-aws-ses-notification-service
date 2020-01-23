@@ -21,6 +21,7 @@ resource "aws_lambda_function" "sns_to_ses_mailer" {
 resource "aws_iam_role" "lambda_sns_to_ses_mailer" {
   name               = "lambda_sns_to_ses_mailer"
   assume_role_policy = data.aws_iam_policy_document.lambda_assume_policy.json
+  tags               = var.common_tags
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_sns_to_ses_mailer_xray" {
