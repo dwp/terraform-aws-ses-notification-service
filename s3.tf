@@ -5,6 +5,11 @@ resource "aws_kms_key" "ses_mailer_bucket_cmk" {
   enable_key_rotation     = true
 }
 
+resource "aws_kms_alias" "ses_mailer_bucket_cmk_alias" {
+  target_key_id = aws_kms_key.ses_mailer_bucket_cmk.key_id
+  name          = "alias/ses_mailer_bucket_cmk"
+}
+
 resource "aws_s3_bucket" "ses_mailer_bucket" {
   bucket = var.bucket_name
   acl    = "private"
