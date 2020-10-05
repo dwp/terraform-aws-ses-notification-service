@@ -42,6 +42,13 @@ resource "aws_s3_bucket" "ses_mailer_bucket" {
       }
     }
   }
+
+  tags = merge(
+    var.common_tags,
+    {
+      Name = "ses-mailer-bucket"
+    }
+  )
 }
 
 data "aws_iam_policy_document" "ses_send_mail_read_s3" {
