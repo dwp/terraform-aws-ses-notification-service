@@ -38,4 +38,11 @@ resource "aws_iam_policy" "write_cloud_watch_logs" {
   name        = "WriteCloudWatchLogs"
   description = "Allow writing logs to CloudWatch"
   policy      = data.aws_iam_policy_document.write_cloud_watch_logs.json
+
+  tags = merge(
+    var.common_tags,
+    {
+      Name = "write_cloud_watch_logs"
+    }
+  )
 }

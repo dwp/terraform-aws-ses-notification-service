@@ -3,6 +3,13 @@ resource "aws_kms_key" "ses_mailer_bucket_cmk" {
   deletion_window_in_days = 14
   is_enabled              = true
   enable_key_rotation     = true
+
+  tags = merge(
+    var.common_tags,
+    {
+      Name = "ses_mailer_bucket_cmk"
+    }
+  )
 }
 
 resource "aws_kms_alias" "ses_mailer_bucket_cmk_alias" {
@@ -74,6 +81,13 @@ resource "aws_iam_policy" "ses_send_mail_read_s3" {
   name        = "ses_send_mail_read_s3"
   description = "Allow retreiving mail templates and mailing lists from S3"
   policy      = data.aws_iam_policy_document.ses_send_mail_read_s3.json
+
+  tags = merge(
+    var.common_tags,
+    {
+      Name = "ses_send_mail_read_s3"
+    }
+  )
 }
 
 output "ses_mailer_bucket" {
