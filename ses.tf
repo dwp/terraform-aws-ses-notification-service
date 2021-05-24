@@ -15,6 +15,13 @@ resource "aws_iam_policy" "ses_send_mail" {
   name        = "ses_send_mail"
   description = "Allow sending mail through SES"
   policy      = data.aws_iam_policy_document.ses_send_mail.json
+
+  tags = merge(
+    var.common_tags,
+    {
+      Name = "ses_send_mail"
+    }
+  )
 }
 
 resource "aws_ses_domain_identity" "domain_identity" {
