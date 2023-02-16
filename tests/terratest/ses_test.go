@@ -60,7 +60,6 @@ func TestSES(t *testing.T) {
 	terraform.RequirePlannedValuesMapKeyExists(t, plan, "module.ses_notification_service.aws_ses_domain_identity.domain_identity")
 	terraform.RequirePlannedValuesMapKeyExists(t, plan, "module.ses_notification_service.aws_s3_bucket.ses_mailer_bucket")
 	terraform.RequirePlannedValuesMapKeyExists(t, plan, "module.ses_notification_service.aws_lambda_function.sns_to_ses_mailer")
-	terraform.RequirePlannedValuesMapKeyExists(t, plan, "module.ses_notification_service.aws_s3_bucket.ses_mailer_bucket")
 
 
 	// Run `terraform output` to get the value of an output variable
