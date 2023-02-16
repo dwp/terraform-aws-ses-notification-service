@@ -1,8 +1,8 @@
 jobs:
   - name: update-pipeline
     plan:
-      - get: terraform-aws-vpc
-        resource: terraform-aws-vpc-update-pipeline
+      - get: terraform-aws-ses-notification-service
+        resource: terraform-aws-ses-notification-service-update-pipeline
         trigger: true
       - task: aviator
         config:
@@ -20,10 +20,10 @@ jobs:
                 sed -i 's/fly/nofly/' aviator.yml
                 /usr/bin/aviator -f aviator.yml
                 mv aviator_pipeline.yml ../pipeline
-            dir: terraform-aws-vpc
+            dir: terraform-aws-ses-notification-service
           inputs:
-            - name: terraform-aws-vpc
+            - name: terraform-aws-ses-notification-service
           outputs:
             - name: pipeline
-      - set_pipeline: terraform-aws-vpc
+      - set_pipeline: terraform-aws-ses-notification-service
         file: pipeline/aviator_pipeline.yml
