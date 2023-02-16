@@ -1,0 +1,8 @@
+groups:
+- name: pull-request
+  jobs:
+  - terraform-aws-ses-notification-service-pr
+
+- name: update-pipeline
+  jobs:
+  - update-pipeline

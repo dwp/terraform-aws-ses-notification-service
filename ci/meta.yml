@@ -1,0 +1,75 @@
+meta:
+  plan:
+    terraform-bootstrap:
+      task: terraform-bootstrap
+      config:
+        platform: linux
+        image_resource:
+          type: docker-image
+          source:
+            repository: dwpdigital/jinja-yaml-aws
+            version: 0.0.19
+            tag: 0.0.19
+        run:
+          path: sh
+          args:
+            - -exc
+            - |
+              python ./example/bootstrap_terraform.py
+              cp ./example/terraform.tfvars ../terraform-config
+          dir: terraform-aws-ses-notification-service
+        inputs:
+          - name: terraform-aws-ses-notification-service
+        outputs:
+          - name: terraform-aws-ses-notification-service
+          - name: terraform-config
+      params:
+        AWS_REGION: eu-west-2
+
+    terraform-common-config:
+      config:
+        platform: linux
+        image_resource:
+          type: registry-image
+          source:
+            repository: dwpdigital/all-terra-tools-docker
+      params:
+        TF_INPUT: false
+        TF_CLI_ARGS_apply: -lock-timeout=300s
+        TF_CLI_ARGS_plan: -lock-timeout=300s
+        TF_VAR_slack_webhook_url: ((dataworks.slack_webhook_url))
+        TF_VAR_costcode: ((dataworks.costcode))
+
+    pre-checks:
+      task: pre-checks
+      .: (( inject meta.plan.terraform-common-config ))
+      config:
+        run:
+          path: sh
+          args:
+          - -exc
+          - |
+            pre-commit install
+            pre-commit run --all-files
+          dir: terraform-aws-ses-notification-service
+        inputs:
+          - name: terraform-aws-ses-notification-service-pr
+
+    terraform-terratest:
+      task: terraform-terratest
+      .: (( inject meta.plan.terraform-common-config ))
+      config:
+        run:
+          path: sh
+          args:
+          - -exc
+          - |
+            cp ../terraform-config/terraform.tfvars ./example
+            go mod init ses
+            go mod tidy
+            cd tests/terratest
+            go test -v -timeout 30m ses_test.go
+          dir: terraform-aws-ses-notification-service
+        inputs:
+          - name: terraform-aws-ses-notification-service
+          - name: terraform-config
