@@ -53,7 +53,7 @@ meta:
             pre-commit run --all-files
           dir: terraform-aws-ses-notification-service
         inputs:
-          - name: terraform-aws-ses-notification-service-pr
+          - name: terraform-aws-ses-notification-service
 
     terraform-terratest:
       task: terraform-terratest
