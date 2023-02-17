@@ -73,3 +73,49 @@ meta:
         inputs:
           - name: terraform-aws-ses-notification-service
           - name: terraform-config
+
+    notify:
+      on_success:
+        put: slack
+        attempts: 1
+        params:
+          channel: "#dataworks-concourse-notifications"
+          icon_emoji: ":concourse-green:"
+          attachments:
+            - color: "#27bd06"
+              text: |
+                The <https://ci.dataworks.dwp.gov.uk/builds/$BUILD_ID|$BUILD_JOB_NAME> stage for <https://ci.dataworks.dwp.gov.uk/teams/dataworks/pipelines/$BUILD_PIPELINE_NAME|*$BUILD_PIPELINE_NAME*> has completed successfully.
+              attachment_type: "default"
+      on_failure:
+        put: slack
+        attempts: 1
+        params:
+          channel: "#dataworks-concourse-notifications"
+          icon_emoji: ":concourse-red:"
+          attachments:
+            - color: "#ed0707"
+              text: |
+                The <https://ci.dataworks.dwp.gov.uk/builds/$BUILD_ID|$BUILD_JOB_NAME> stage for <https://ci.dataworks.dwp.gov.uk/teams/dataworks/pipelines/$BUILD_PIPELINE_NAME|*$BUILD_PIPELINE_NAME*> has failed.
+              attachment_type: "default"
+      on_error:
+        put: slack
+        attempts: 1
+        params:
+          channel: "#dataworks-concourse-notifications"
+          icon_emoji: ":concourse-red:"
+          attachments:
+            - color: "#eff702"
+              text: |
+                The <https://ci.dataworks.dwp.gov.uk/builds/$BUILD_ID|$BUILD_JOB_NAME> stage for <https://ci.dataworks.dwp.gov.uk/teams/dataworks/pipelines/$BUILD_PIPELINE_NAME|*$BUILD_PIPELINE_NAME*> has errored.
+              attachment_type: "default"
+      on_abort:
+        put: slack
+        attempts: 1
+        params:
+          channel: "#dataworks-concourse-notifications"
+          icon_emoji: ":concourse:"
+          attachments:
+            - color: "#472102"
+              text: |
+                The <https://ci.dataworks.dwp.gov.uk/builds/$BUILD_ID|$BUILD_JOB_NAME> stage for <https://ci.dataworks.dwp.gov.uk/teams/dataworks/pipelines/$BUILD_PIPELINE_NAME|*$BUILD_PIPELINE_NAME*> has been aborted.
+              attachment_type: "default"

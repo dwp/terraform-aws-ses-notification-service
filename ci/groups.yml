@@ -1,4 +1,8 @@
 groups:
+- name: test
+  jobs:
+  - test
+
 - name: pull-request
   jobs:
   - terraform-aws-ses-notification-service-pr

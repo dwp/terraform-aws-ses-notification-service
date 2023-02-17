@@ -16,10 +16,6 @@ jobs:
     .: (( inject meta.plan.pre-checks ))
     input_mapping:
       terraform-aws-ses-notification-service: terraform-aws-ses-notification-service-pr
-  - task: terraform-terratest
-    .: (( inject meta.plan.terraform-terratest ))
-    input_mapping:
-      terraform-aws-ses-notification-service: terraform-aws-ses-notification-service-pr
     on_failure:
       put: terraform-aws-ses-notification-service-pr
       params:
@@ -32,3 +28,4 @@ jobs:
         context: $BUILD_JOB_NAME
         path: terraform-aws-ses-notification-service-pr
         status: success
+  .: (( inject meta.plan.notify ))

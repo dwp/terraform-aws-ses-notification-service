@@ -1,4 +1,13 @@
 resources:
+- name: terraform-aws-ses-notification-service
+  type: git
+  source:
+    branch: test
+    access_token: ((dataworks-secrets.concourse_github_pat))
+    uri: https://github.com/dwp/terraform-aws-ses-notification-service.git
+  check_every: 5m
+  webhook_token: ((dataworks.concourse_github_webhook_token))
+
 - name: terraform-aws-ses-notification-service-pr
   type: pull-request
   source:
@@ -18,3 +27,8 @@ resources:
       - aviator.yml
   check_every: 5m
   webhook_token: ((dataworks.concourse_github_webhook_token))
+
+- name: slack
+  type: slack-notification
+  source:
+    url: ((dataworks.slack_webhook_url))
