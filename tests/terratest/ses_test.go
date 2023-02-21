@@ -66,6 +66,7 @@ func TestSES(t *testing.T) {
 	bucketID := terraform.Output(t, terraformOptionsSES, "bucket_id")
 	lambdaArn := terraform.Output(t, terraformOptionsSES, "lambda_arn")
 
+
 	// Verify that our Bucket has been created
 	assert.Equal(t, bucketID, "dwx-test-ses-bucket", "Bucket ID must match")
 
