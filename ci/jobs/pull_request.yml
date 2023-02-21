@@ -1,0 +1,31 @@
+jobs:
+- name: terraform-aws-ses-notification-service-pr
+  plan:
+  - get: terraform-aws-ses-notification-service-pr
+    trigger: true
+    version: every
+  - put: terraform-aws-ses-notification-service-pr
+    params:
+      context: $BUILD_JOB_NAME
+      path: terraform-aws-ses-notification-service-pr
+      status: pending
+  - .: (( inject meta.plan.terraform-bootstrap ))
+    input_mapping:
+      terraform-aws-ses-notification-service: terraform-aws-ses-notification-service-pr
+  - task: pre-checks
+    .: (( inject meta.plan.pre-checks ))
+    input_mapping:
+      terraform-aws-ses-notification-service: terraform-aws-ses-notification-service-pr
+    on_failure:
+      put: terraform-aws-ses-notification-service-pr
+      params:
+        context: $BUILD_JOB_NAME
+        path: terraform-aws-ses-notification-service-pr
+        status: failure
+    on_success:
+      put: terraform-aws-ses-notification-service-pr
+      params:
+        context: $BUILD_JOB_NAME
+        path: terraform-aws-ses-notification-service-pr
+        status: success
+  .: (( inject meta.plan.notify ))

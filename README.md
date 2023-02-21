@@ -17,7 +17,7 @@ module "ses_notification_service" {
 }
 ```
 ## Examples
-The following example creates the notification service, SNS topic, email template, and distribution list.<br/> 
+The following example creates the notification service, SNS topic, email template, and distribution list.<br/>
 Notifications published to SNS topic will then be emailed to the distribution list.
 
 ### Enable S3 Access Logging
