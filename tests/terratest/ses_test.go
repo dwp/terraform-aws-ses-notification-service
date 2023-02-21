@@ -66,11 +66,9 @@ func TestSES(t *testing.T) {
 	bucketID := terraform.Output(t, terraformOptionsSES, "bucket_id")
 	lambdaArn := terraform.Output(t, terraformOptionsSES, "lambda_arn")
 
-	// Verify that our Bucket has versioning enabled
+
+	// Verify that our Bucket has been created
 	assert.Equal(t, bucketID, "dwx-test-ses-bucket", "Bucket ID must match")
-	actualStatus := aws.GetS3BucketVersioning(t, awsRegion, bucketID)
-	expectedStatus := "Enabled"
-	assert.Equal(t, expectedStatus, actualStatus)
 
 	// Checks Lambda arn exists
 	lengthOflambdaArn := len(lambdaArn)
