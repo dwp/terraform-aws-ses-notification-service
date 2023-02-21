@@ -48,5 +48,49 @@ variable "bucket_access_logging" {
 }
 
 variable "common_tags" {
-  default = {}
+  type        = map(string)
+  description = "Common Tags"
+  default     = {}
+}
+
+variable "cw_logs_policy_name" {
+  type        = string
+  description = "Cloudwatch Logs Policy name"
+  default     = "WriteCloudWatchLogs"
+}
+
+variable "lambda_mailer_role_name" {
+  type        = string
+  description = "Lambda Mailer IAM role name"
+  default     = "lambda_sns_to_ses_mailer"
+}
+
+variable "lambda_mailer_cw_log_group_name" {
+  type        = string
+  description = "Lambda Mailer CW log group name"
+  default     = "/aws/lambda/sns_to_ses_mailer"
+}
+
+variable "ses_mailer_bucket_cmk" {
+  type        = string
+  description = "Lambda Mailer CW log group name"
+  default     = "alias/ses_mailer_bucket_cmk"
+}
+
+variable "ses_send_mail_policy_name" {
+  type        = string
+  description = "SES Send Mail Policy name"
+  default     = "ses_send_mail"
+}
+
+variable "ses_lambda_func_name" {
+  type        = string
+  description = "SES Lambda Function Name"
+  default     = "sns_to_ses_mailer"
+}
+
+variable "ses_send_mail_reads3_policy_name" {
+  type        = string
+  description = "SES Send Mail Read s3 Policy name"
+  default     = "ses_send_mail_read_s3"
 }

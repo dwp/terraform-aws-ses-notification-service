@@ -1,0 +1,14 @@
+jobs:
+- name: test
+  plan:
+  - get: terraform-aws-ses-notification-service
+    trigger: true
+    version: every
+  - .: (( inject meta.plan.terraform-bootstrap ))
+    input_mapping:
+      terraform-aws-ses-notification-service: terraform-aws-ses-notification-service
+  - task: terraform-terratest
+    .: (( inject meta.plan.terraform-terratest ))
+    input_mapping:
+      terraform-aws-ses-notification-service: terraform-aws-ses-notification-service
+  .: (( inject meta.plan.notify ))
