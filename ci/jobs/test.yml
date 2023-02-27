@@ -1,14 +1,23 @@
 jobs:
 - name: test
   plan:
-  - get: terraform-aws-ses-notification-service
+  - get: terraform-aws-ses-notification-service-test
     trigger: true
     version: every
+  - get: terraform-aws-ses-notification-service
+  - put: terraform-aws-ses-notification-service-test
+    params:
+      repository: terraform-aws-ses-notification-service
+      merge: true
   - .: (( inject meta.plan.terraform-bootstrap ))
     input_mapping:
-      terraform-aws-ses-notification-service: terraform-aws-ses-notification-service
+      terraform-aws-ses-notification-service: terraform-aws-ses-notification-service-test
   - task: terraform-terratest
     .: (( inject meta.plan.terraform-terratest ))
     input_mapping:
-      terraform-aws-ses-notification-service: terraform-aws-ses-notification-service
+      terraform-aws-ses-notification-service: terraform-aws-ses-notification-service-test
+  - put: terraform-aws-ses-notification-service
+    params:
+      repository: terraform-aws-ses-notification-service-test
+      merge: true
   .: (( inject meta.plan.notify ))
