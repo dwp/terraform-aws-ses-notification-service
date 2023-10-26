@@ -1,3 +1,5 @@
+# DO NOT USE THIS REPO - MIGRATED TO GITLAB
+
 # terraform-aws-ses-notification-service
 Terraform module that creates a service to receive notifications and distribute emails via AWS SES
 
